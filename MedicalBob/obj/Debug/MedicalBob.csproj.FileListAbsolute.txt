@@ -1,0 +1,7 @@
+C:\Users\PC-IO\Desktop\Repo\c-sharp\MedicalBob\MedicalBob\obj\Debug\MedicalBob.csproj.AssemblyReference.cache
+C:\Users\PC-IO\Desktop\Repo\c-sharp\MedicalBob\MedicalBob\obj\Debug\MedicalBob.csproj.CoreCompileInputs.cache
+C:\Users\PC-IO\Desktop\Repo\c-sharp\MedicalBob\MedicalBob\bin\Debug\MedicalBob.exe.config
+C:\Users\PC-IO\Desktop\Repo\c-sharp\MedicalBob\MedicalBob\bin\Debug\MedicalBob.exe
+C:\Users\PC-IO\Desktop\Repo\c-sharp\MedicalBob\MedicalBob\bin\Debug\MedicalBob.pdb
+C:\Users\PC-IO\Desktop\Repo\c-sharp\MedicalBob\MedicalBob\obj\Debug\MedicalBob.exe
+C:\Users\PC-IO\Desktop\Repo\c-sharp\MedicalBob\MedicalBob\obj\Debug\MedicalBob.pdb

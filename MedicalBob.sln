@@ -5,8 +5,6 @@ VisualStudioVersion = 17.7.34024.191
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MedicalBob", "MedicalBob\MedicalBob.csproj", "{975D68DE-983C-4D80-A54D-373720AC29BE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClassLibrary1", "ClassLibrary1\ClassLibrary1.csproj", "{34858197-7C96-4231-817E-E5F1926346C5}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,10 +15,6 @@ Global
 		{975D68DE-983C-4D80-A54D-373720AC29BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{975D68DE-983C-4D80-A54D-373720AC29BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{975D68DE-983C-4D80-A54D-373720AC29BE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{34858197-7C96-4231-817E-E5F1926346C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{34858197-7C96-4231-817E-E5F1926346C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{34858197-7C96-4231-817E-E5F1926346C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{34858197-7C96-4231-817E-E5F1926346C5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

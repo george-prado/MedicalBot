@@ -1,15 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace MedicalBob
+public class Program
 {
-    internal class Program
+    static void Main()
     {
-        static void Main(string[] args)
-        {
-        }
+        Patient joe;
+
+        joe = new Patient();
+
+        joe.SetName("joe");
+
+        Console.WriteLine($"The patient name is {joe.GetName()}");
+        Console.ReadKey();  
     }
 }
