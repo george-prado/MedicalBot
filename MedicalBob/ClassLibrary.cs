@@ -133,33 +133,35 @@ public class MedicalBot
     public void PrescribeMedication(Patient patient)
     {
         string medicationName = "";
-        if (patient.GetSymptonCode() == "headache")
+        if (patient.GetSymptonCode() == "Headache")
         {
-            medicationName = "ibuprofen";
+            medicationName = "Ibuprofen";
         }
-        else if (patient.GetSymptonCode() == "skin rashes")
+        else if (patient.GetSymptonCode() == "Skin rashes")
         {
-            medicationName = "diphenhydramine";
+            medicationName = "Diphenhydramine";
         }
-        else if (patient.GetSymptonCode() == "dizzness")
+        else if (patient.GetSymptonCode() == "Dizziness")
         {
-            if (patient.GetMedicalHistory() == "diabetes")
+            if (patient.GetMedicalHistory() == "Diabetes")
             {
-                medicationName = "metformin";
+                medicationName = "Metformin";
             }
             else
             {
-                medicationName = "dimenhydrinate";
+                medicationName = "Dimenhydrinate";
             }
         }
 
-        Console.WriteLine($"Based on your symptons and medical history, I prescribe you {medicationName} {GetDosage(medicationName)}");
+        string prescription = $"Based on your symptons and medical history, I prescribe you {medicationName} {GetDosage(medicationName)}";
+
+        patient.SetPrescription(prescription);
 
 
         string GetDosage(string medicationName)
         {
 
-            if (medicationName == "ibuprofen")
+            if (medicationName == "Ibuprofen")
             {
                 if (patient.GetAge() < 18)
                 {
@@ -170,7 +172,7 @@ public class MedicalBot
                     return "800mg";
                 }
             }
-            else if (medicationName == "diphenhydramine")
+            else if (medicationName == "Diphenhydramine")
             {
                 if (patient.GetAge() < 18)
                 {
@@ -181,7 +183,7 @@ public class MedicalBot
                     return "300mg";
                 }
             }
-            else if (medicationName == "dimenhydrinate")
+            else if (medicationName == "Dimenhydrinate")
             {
                 if (patient.GetAge() < 18)
                 {
