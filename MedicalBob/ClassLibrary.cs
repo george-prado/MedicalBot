@@ -13,66 +13,101 @@ public class Patient
 
 
     //set methods
-    public void SetName(string name, out string errorMessage)
+    public bool SetName(string name, out string errorMessage)
     {
-        errorMessage = null;
+        bool isValid;
+        errorMessage = "";
 
-        if (name == null || name == "")
+        if (name == null || name.Length == 0)
         {
-            errorMessage = "The patient name cannot be null or empty";
+            isValid = false;
+            errorMessage = "The patient name cannot be blank or invalid";
+            return isValid;
         }
-        else
+        else if (name.Length < 2)
         {
-            this.name = name;
+            isValid = false;
+            errorMessage = "Patient name should contain at least two or more characters";
+            return isValid;
+        } else
+        {
+            isValid = true;
+            foreach (char c in name) 
+            { 
+            if (!char.IsLetter(c))
+                {
+                    isValid = false;
+                    errorMessage = "Patient name must contain only letters";
+                    break;
+                }
+            }
+
         }
         
+        this.name = name;
+        return isValid;
     }
-    public void SetAge(int age, out string errorMessage)
+    public bool SetAge(int age, out string errorMessage)
     {
-        errorMessage = null;
+        bool isValid;
+        errorMessage = "";
+
         if (age < 0)
         {
-            errorMessage = "Please entry a valid age number";
+            isValid = false;
+            errorMessage = "Age can't be negative";
+            return isValid;
         }
-        else
+        else if (age > 100)
         {
-            this.age = age;
+            isValid = false;
+            errorMessage = "Age cannot be higher than 100";
+            return isValid;
         }
+
+        isValid = true;
+
+        this.age = age;
+        return isValid;
     }
-    public void SetGender(string gender, out string errorMessage)
+    public bool SetGender(string gender, out string errorMessage)
     {
+        bool isValid;
         errorMessage = null;
-        if (gender == null || (gender != "male" && gender != "female"))
+        if (string.IsNullOrEmpty(gender) || (gender.ToLower() != "male" && gender != "female" && gender != "Male" && gender != "Female"))
         {
+            isValid = false;
             errorMessage = "Please enter a valid gender";
+            return isValid;
         }
-        else
-        {
-            this.gender = gender;
-        }
+        isValid = true;
+      
+        this.gender = gender;
+        return isValid;
     }
     public void SetMedicalHistory(string medicalHistory)
     {
         this.medicalHistory = medicalHistory;
     }
-    public void SetSymptonCode(string symptonCode, out string errorMessage)
+    public bool SetSymptonCode(string symptonCode, out string errorMessage)
     {
+        bool isValid;
         errorMessage = null;
-        if (symptonCode == null)
+        if (symptonCode != "S1" && symptonCode != "S2" && symptonCode != "S3" && symptonCode != "s1" && symptonCode != "s2" && symptonCode != "s3")
         {
+            isValid = false;
             errorMessage = "Please input a valid sympton code";
+            return isValid;
         }
-        else
-        {
-            this.symptonCode = symptonCode;
-        }
+        isValid = true;
+      
+        this.symptonCode = symptonCode;
+        return isValid;
     }
     public void SetPrescription(string prescription)
     {
         this.prescription = prescription;
     }
-
-
 
     //get methods
     public string GetName()
@@ -93,43 +128,32 @@ public class Patient
     }
     public string GetSymptonCode()
     {
+        string sympton;
         switch (symptonCode?.ToLower())
         {
-            case "s1":
-                return "Headache";
-            case "s2":
-                return "Skin rashes";
-            case "s3":
-                return "Dizziness";
-            default:
-                return "Unknown";
+            case "s1": sympton = "Headache"; break;
+            case "s2": sympton = "Skin rashes"; break;
+            case "s3": sympton = "Dizziness"; break;
+            default: sympton = "Unknown"; break;
         }
+        return sympton;
     }
     public string GetPrescription()
     {
         return prescription;
     }
-
-
-
 }
 
 public class MedicalBot
 {
-    //MedicalBot fields
+    //field && encapsulating
     private const string BotName = "Bob";
-
-
-
-    //get methods
-    public static string GetName()
+    public static string GetBotName()
     {
         return BotName;
     }
 
-
-
-    //determine the medication based on patient symptoms
+    //Prescribe method - used for: determine the medication based on patient symptoms
     public void PrescribeMedication(Patient patient)
     {
         string medicationName = "";
@@ -143,7 +167,7 @@ public class MedicalBot
         }
         else if (patient.GetSymptonCode() == "Dizziness")
         {
-            if (patient.GetMedicalHistory() == "Diabetes")
+            if (patient.GetMedicalHistory().ToLower() == "diabetes")
             {
                 medicationName = "Metformin";
             }
@@ -154,10 +178,10 @@ public class MedicalBot
         }
 
         string prescription = $"Based on your symptons and medical history, I prescribe you {medicationName} {GetDosage(medicationName)}";
-
         patient.SetPrescription(prescription);
 
 
+        //local function - used for: defining the dose based on the medication name
         string GetDosage(string medicationName)
         {
 
@@ -200,10 +224,4 @@ public class MedicalBot
             }
         }
     }
-
-
-
-
-
-
 }

@@ -5,57 +5,63 @@ public class Program
 {
     static void Main()
     {
-        Patient p1;
-        p1 = new Patient();
 
-        Console.WriteLine("Hi, I'm here to help you in your medication.");
-        
-        Console.WriteLine("\nLet's get started. Please enter your name: ");
-        string tempName = Console.ReadLine();
+        //Welcoming the new patient
+        Console.WriteLine($"Hello, I'm {MedicalBot.GetBotName()},\nI'm here to help you in your medication.");
+        Console.WriteLine("First, let's proceed with the clinical anamnesis.");
 
-        Console.WriteLine("Please enter your age: ");
-        int tempAge;
-        string userAgeInput;
-        do
+        //Creating new patient 
+        Patient patient;
+        patient = new Patient();
+
+        //Read and validate patient fields
+        Console.Write("\nLet's get started. Please enter the patient name: ");
+        while (!patient.SetName(Console.ReadLine(), out string errorMessage))
         {
-            userAgeInput = Console.ReadLine();
-            if (!int.TryParse(userAgeInput, out tempAge))
+            Console.WriteLine(errorMessage);
+            Console.Write("Enter patient name: ");
+        }
+
+        Console.Write("Please enter patient age: ");
+        while (!patient.SetAge(int.Parse(Console.ReadLine()), out string errorMessage))
+        {
+            Console.WriteLine(errorMessage);
+            Console.Write("Please enter patient age: ");
+        }
+
+        Console.Write("Please enter your gender (e.g. Male/Female): ");
+        while (!patient.SetGender(Console.ReadLine(), out string errorMessage))
             {
-                Console.WriteLine("Invalid age input. Age must be a valid number.");
-            }
-        } while (!int.TryParse(userAgeInput, out tempAge));
-
-
-        Console.WriteLine("Please enter your gender (e.g. Male/Female): ");
-        string tempGender = Console.ReadLine();
+            Console.WriteLine(errorMessage);
+            Console.Write("Please enter your gender: ");
+        }
        
         Console.WriteLine("Please enter your medical history (e.g. Diabetes). Press enter for none: ");
-        string tempMedicalHistory = Console.ReadLine();
+        patient.SetMedicalHistory(Console.ReadLine());
 
 
-        p1.SetName(tempName, out string isNameValid);
-        p1.SetAge(tempAge, out string isAgeValid);
-        p1.SetGender(tempGender, out string isGenderValid);
-        p1.SetMedicalHistory(tempMedicalHistory);
+        //Next stage of diagnosis - symptons
+        Console.WriteLine($"\n\n\nWelcome, {patient.GetName()}, {patient.GetAge()}.");
+        Console.WriteLine("Which of the following symptons do you have:\nS1. Headache\nS2. Skin rashes\nS3. " +
+            "Dizziness\n\nEnter the sympton " + "code from the above list (S1, S2 or S3): ");
+        
+        while (!patient.SetSymptonCode(Console.ReadLine(), out string errorMessage)){
+            Console.WriteLine(errorMessage);
+            Console.Write("Please choose again your sympton code: ");
+        }
 
 
-
-        Console.WriteLine($"\n\n\nWelcome, {p1.GetName()}, {p1.GetAge()}.");
-        Console.WriteLine("Which of the following symptons do you have:\nS1. Headache\nS2. Skin rashes\nS3. Dizziness\n\nEnter the sympton " +
-            "code from the above list (S1, S2 or S3): ");
-        string tempSympton = Console.ReadLine();
-
-        p1.SetSymptonCode(tempSympton, out string isCodeValid);
-
+        //Next stage - calling MedicalBot + creating prescription
         MedicalBot medicalbot = new MedicalBot();
+        medicalbot.PrescribeMedication(patient);
 
-        medicalbot.PrescribeMedication(p1);
+        string prescription = patient.GetPrescription();
 
-        string prescription = p1.GetPrescription();
-
+        //Printing prescription
         Console.WriteLine("\n\n");
         Console.WriteLine(prescription);
 
+        //Goodbye message
         Console.WriteLine("\n\nThanks for coming.");
         Console.ReadKey();
     }
