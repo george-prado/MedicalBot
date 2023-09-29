@@ -8,14 +8,14 @@ public class Program
 
         //Welcoming the new patient
         Console.WriteLine($"Hello, I'm {MedicalBot.GetBotName()},\nI'm here to help you in your medication.");
-        Console.WriteLine("First, let's proceed with the clinical anamnesis.");
+        Console.WriteLine("\nFirst, let's proceed with the clinical anamnesis.");
 
         //Creating new patient 
         Patient patient;
         patient = new Patient();
 
         //Read and validate patient fields
-        Console.Write("\nLet's get started. Please enter the patient name: ");
+        Console.Write("\nPlease enter the patient name: ");
         while (!patient.SetName(Console.ReadLine(), out string errorMessage))
         {
             Console.WriteLine(errorMessage);
@@ -36,13 +36,13 @@ public class Program
             Console.Write("Please enter your gender: ");
         }
        
-        Console.WriteLine("Please enter your medical history (e.g. Diabetes). Press enter for none: ");
+        Console.Write("Please enter your medical history (e.g. Diabetes). Press enter for none: ");
         patient.SetMedicalHistory(Console.ReadLine());
 
 
         //Next stage of diagnosis - symptons
-        Console.WriteLine($"\n\n\nWelcome, {patient.GetName()}, {patient.GetAge()}.");
-        Console.WriteLine("Which of the following symptons do you have:\nS1. Headache\nS2. Skin rashes\nS3. " +
+        Console.WriteLine($"\n\nWelcome, {patient.GetName()}, {patient.GetAge()}.");
+        Console.Write("Which of the following symptons do you have:\nS1. Headache\nS2. Skin rashes\nS3. " +
             "Dizziness\n\nEnter the sympton " + "code from the above list (S1, S2 or S3): ");
         
         while (!patient.SetSymptonCode(Console.ReadLine(), out string errorMessage)){

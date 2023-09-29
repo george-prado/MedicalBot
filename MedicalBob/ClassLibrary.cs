@@ -21,13 +21,13 @@ public class Patient
         if (name == null || name.Length == 0)
         {
             isValid = false;
-            errorMessage = "The patient name cannot be blank or invalid";
+            errorMessage = "The patient name cannot be blank or invalid\n";
             return isValid;
         }
         else if (name.Length < 2)
         {
             isValid = false;
-            errorMessage = "Patient name should contain at least two or more characters";
+            errorMessage = "Patient name should contain at least two or more characters\n";
             return isValid;
         } else
         {
@@ -37,7 +37,7 @@ public class Patient
             if (!char.IsLetter(c))
                 {
                     isValid = false;
-                    errorMessage = "Patient name must contain only letters";
+                    errorMessage = "Patient name must contain only letters\n";
                     break;
                 }
             }
@@ -55,13 +55,13 @@ public class Patient
         if (age < 0)
         {
             isValid = false;
-            errorMessage = "Age can't be negative";
+            errorMessage = "Age can't be negative\n";
             return isValid;
         }
         else if (age > 100)
         {
             isValid = false;
-            errorMessage = "Age cannot be higher than 100";
+            errorMessage = "Age cannot be higher than 100\n";
             return isValid;
         }
 
@@ -77,7 +77,7 @@ public class Patient
         if (string.IsNullOrEmpty(gender) || (gender.ToLower() != "male" && gender != "female" && gender != "Male" && gender != "Female"))
         {
             isValid = false;
-            errorMessage = "Please enter a valid gender";
+            errorMessage = "Please enter a valid gender\n";
             return isValid;
         }
         isValid = true;
@@ -96,7 +96,7 @@ public class Patient
         if (symptonCode != "S1" && symptonCode != "S2" && symptonCode != "S3" && symptonCode != "s1" && symptonCode != "s2" && symptonCode != "s3")
         {
             isValid = false;
-            errorMessage = "Please input a valid sympton code";
+            errorMessage = "Please input a valid sympton code\n";
             return isValid;
         }
         isValid = true;
