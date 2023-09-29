@@ -13,25 +13,59 @@ public class Patient
 
 
     //set methods
-    public void SetName(string name)
+    public void SetName(string name, out string errorMessage)
     {
-        this.name = name;
+        errorMessage = null;
+
+        if (name == null || name == "")
+        {
+            errorMessage = "The patient name cannot be null or empty";
+        }
+        else
+        {
+            this.name = name;
+        }
+        
     }
-    public void SetAge(int age)
+    public void SetAge(int age, out string errorMessage)
     {
-        this.age = age;
+        errorMessage = null;
+        if (age < 0)
+        {
+            errorMessage = "Please entry a valid age number";
+        }
+        else
+        {
+            this.age = age;
+        }
     }
-    public void SetGender(string gender)
+    public void SetGender(string gender, out string errorMessage)
     {
-        this.gender = gender;
+        errorMessage = null;
+        if (gender == null || (gender != "male" && gender != "female"))
+        {
+            errorMessage = "Please enter a valid gender";
+        }
+        else
+        {
+            this.gender = gender;
+        }
     }
     public void SetMedicalHistory(string medicalHistory)
     {
         this.medicalHistory = medicalHistory;
     }
-    public void SetSymptonCode(string symptonCode)
+    public void SetSymptonCode(string symptonCode, out string errorMessage)
     {
-        this.symptonCode = symptonCode;
+        errorMessage = null;
+        if (symptonCode == null)
+        {
+            errorMessage = "Please input a valid sympton code";
+        }
+        else
+        {
+            this.symptonCode = symptonCode;
+        }
     }
     public void SetPrescription(string prescription)
     {
@@ -59,7 +93,17 @@ public class Patient
     }
     public string GetSymptonCode()
     {
-        return symptonCode;
+        switch (symptonCode?.ToLower())
+        {
+            case "s1":
+                return "Headache";
+            case "s2":
+                return "Skin rashes";
+            case "s3":
+                return "Dizziness";
+            default:
+                return "Unknown";
+        }
     }
     public string GetPrescription()
     {
