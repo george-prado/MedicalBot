@@ -1,227 +1,207 @@
 ﻿using System;
 
-public class Patient
-{
-    //Patient fields
-    private string name;
-    private int age;
-    private string gender;
-    private string medicalHistory;
-    private string symptonCode;
-    private string prescription;
-
-
-
-    //set methods
-    public bool SetName(string name, out string errorMessage)
-    {
-        bool isValid;
-        errorMessage = "";
-
-        if (name == null || name.Length == 0)
-        {
-            isValid = false;
-            errorMessage = "The patient name cannot be blank or invalid\n";
-            return isValid;
-        }
-        else if (name.Length < 2)
-        {
-            isValid = false;
-            errorMessage = "Patient name should contain at least two or more characters\n";
-            return isValid;
-        } else
-        {
-            isValid = true;
-            foreach (char c in name) 
-            { 
-            if (!char.IsLetter(c))
-                {
-                    isValid = false;
-                    errorMessage = "Patient name must contain only letters\n";
-                    break;
-                }
-            }
-
-        }
-        
-        this.name = name;
-        return isValid;
-    }
-    public bool SetAge(int age, out string errorMessage)
-    {
-        bool isValid;
-        errorMessage = "";
-
-        if (age < 0)
-        {
-            isValid = false;
-            errorMessage = "Age can't be negative\n";
-            return isValid;
-        }
-        else if (age > 100)
-        {
-            isValid = false;
-            errorMessage = "Age cannot be higher than 100\n";
-            return isValid;
-        }
-
-        isValid = true;
-
-        this.age = age;
-        return isValid;
-    }
-    public bool SetGender(string gender, out string errorMessage)
-    {
-        bool isValid;
-        errorMessage = null;
-        if (string.IsNullOrEmpty(gender) || (gender.ToLower() != "male" && gender != "female" && gender != "Male" && gender != "Female"))
-        {
-            isValid = false;
-            errorMessage = "Please enter a valid gender\n";
-            return isValid;
-        }
-        isValid = true;
-      
-        this.gender = gender;
-        return isValid;
-    }
-    public void SetMedicalHistory(string medicalHistory)
-    {
-        this.medicalHistory = medicalHistory;
-    }
-    public bool SetSymptonCode(string symptonCode, out string errorMessage)
-    {
-        bool isValid;
-        errorMessage = null;
-        if (symptonCode != "S1" && symptonCode != "S2" && symptonCode != "S3" && symptonCode != "s1" && symptonCode != "s2" && symptonCode != "s3")
-        {
-            isValid = false;
-            errorMessage = "Please input a valid sympton code\n";
-            return isValid;
-        }
-        isValid = true;
-      
-        this.symptonCode = symptonCode;
-        return isValid;
-    }
-    public void SetPrescription(string prescription)
-    {
-        this.prescription = prescription;
-    }
-
-    //get methods
-    public string GetName()
-    {
-        return name;
-    }
-    public int GetAge()
-    {
-        return age;
-    }
-    public string GetGender()
-    {
-        return gender;
-    }
-    public string GetMedicalHistory()
-    {
-        return medicalHistory;
-    }
-    public string GetSymptonCode()
-    {
-        string sympton;
-        switch (symptonCode?.ToLower())
-        {
-            case "s1": sympton = "Headache"; break;
-            case "s2": sympton = "Skin rashes"; break;
-            case "s3": sympton = "Dizziness"; break;
-            default: sympton = "Unknown"; break;
-        }
-        return sympton;
-    }
-    public string GetPrescription()
-    {
-        return prescription;
-    }
-}
-
 public class MedicalBot
 {
-    //field && encapsulating
-    private const string BotName = "Bob";
-    public static string GetBotName()
-    {
-        return BotName;
-    }
+	public const string botName = "Bob";
 
-    //Prescribe method - used for: determine the medication based on patient symptoms
-    public void PrescribeMedication(Patient patient)
-    {
-        string medicationName = "";
-        if (patient.GetSymptonCode() == "Headache")
-        {
-            medicationName = "Ibuprofen";
-        }
-        else if (patient.GetSymptonCode() == "Skin rashes")
-        {
-            medicationName = "Diphenhydramine";
-        }
-        else if (patient.GetSymptonCode() == "Dizziness")
-        {
-            if (patient.GetMedicalHistory().ToLower() == "diabetes")
-            {
-                medicationName = "Metformin";
-            }
-            else
-            {
-                medicationName = "Dimenhydrinate";
-            }
-        }
+	public static string GetBotName()
+	{
+		return botName;
+	}
+	public static void SymptomList()
+	{
+		Console.WriteLine("\nS1 - Headache");
+		Console.WriteLine("S2 - Skin rashes");
+		Console.WriteLine("S3 - Dizziness");
+	}
 
-        string prescription = $"Based on your symptons and medical history, I prescribe you {medicationName} {GetDosage(medicationName)}";
-        patient.SetPrescription(prescription);
+	public static void PrescribeMedication(Patient patient)
+	{
+		string prescription = "";
+		if (patient.GetSymptoms() == "Headache")
+		{
+			prescription = "Ibuprofen";
+			Console.WriteLine($"Based on your symptoms, the prescription is {prescription} " + GetDosage(prescription.ToLower()));
+		}
+		else if (patient.GetSymptoms() == "Skin rashes")
+		{
+			prescription = "Diphenhydramine";
+			Console.WriteLine($"Based on your symptoms, the prescription is {prescription} " + GetDosage(prescription.ToLower()));
+		}
+		else if (patient.GetSymptoms() == "Dizziness")
+		{
+			if (patient.GetMedicalHistory() == "diabetes")
+			{
+				prescription = "Metformin";
+				Console.WriteLine($"Based on your symptoms, the prescription is {prescription} " + GetDosage(prescription.ToLower()));
+			}
+			else
+			{
+				prescription = "Dimenhydrinate";
+				Console.WriteLine($"Based on your symptoms, the prescription is {prescription} " + GetDosage(prescription.ToLower()));
+			}
+		}
+
+		string GetDosage(string medicineName)
+		{
+			string dosage = "";
+			if (medicineName == "ibuprofen")
+			{
+				if (patient.GetAge() < 18)
+				{
+					dosage = "400mg";
+					return dosage;
+				}
+				else
+				{
+					dosage = "800mg";
+					return dosage;
+				}
+			}
+			else if (medicineName == "diphenhydramine")
+			{
+				if (patient.GetAge() < 18)
+				{
+					dosage = "50mg";
+					return dosage;
+				}
+				else
+				{
+					dosage = "300mg";
+					return dosage;
+				}
+			}
+			else if (medicineName == "dimenhydrinate")
+			{
+				if (patient.GetAge() < 18)
+				{
+					dosage = "50mg";
+					return dosage;
+				}
+				else
+				{
+					dosage = "400mg";
+					return dosage;
+				}
+			}
+			else if (medicineName == "metformin")
+			{
+				dosage = "500mg";
+				return dosage;
+			}
+			else
+			{
+				return null;
+			}
+		}
+	}
+}
+
+public class Patient
+{
+	private string name;
+	private int age;
+	public string gender;
+	private string medicalHistory;
+	private string symptomCode;
+	private string prescription;
 
 
-        //local function - used for: defining the dose based on the medication name
-        string GetDosage(string medicationName)
-        {
+	//set methods
+	public bool SetName(string name, out string nameErrorMessage)
+	{
+		nameErrorMessage = null;
+		bool validName = true;
 
-            if (medicationName == "Ibuprofen")
-            {
-                if (patient.GetAge() < 18)
-                {
-                    return "400mg";
-                }
-                else
-                {
-                    return "800mg";
-                }
-            }
-            else if (medicationName == "Diphenhydramine")
-            {
-                if (patient.GetAge() < 18)
-                {
-                    return "50mg";
-                }
-                else
-                {
-                    return "300mg";
-                }
-            }
-            else if (medicationName == "Dimenhydrinate")
-            {
-                if (patient.GetAge() < 18)
-                {
-                    return "50mg";
-                }
-                else
-                {
-                    return "400mg";
-                }
-            }
-            else
-            {
-                return "500mg";
-            }
-        }
-    }
+		if (name == "" || name.Length < 2)
+		{
+			nameErrorMessage = "You must enter a valid name";
+			validName = false;
+			return validName;
+		}
+
+		this.name = name;
+		return validName;
+	}
+	public bool SetAge(string age, out string errorMessage)
+	{
+		errorMessage = null;
+		bool validAge = int.TryParse(age, out int _age);
+		if (!validAge)
+		{
+			errorMessage = "Please enter a valid age (numbers only)";
+			return false;
+		}
+		if (_age < 0 || _age > 100)
+		{
+			errorMessage = "Please enter a valid age (0~99 years old)";
+			return false;
+		}
+		this.age = _age;
+		return true;
+	}
+	public bool SetGender(string gender, out string genderErrorMessage)
+	{
+		genderErrorMessage = null;
+
+
+		if (gender.ToLower() != "male" && gender.ToLower() != "female" && gender.ToLower() != "other")
+		{
+			genderErrorMessage = "You must input a valid gender (male/female/other)";
+			return false;
+		}
+
+		this.gender = gender;
+		return true;
+	}
+	public void SetMedicalHistory(string medicalHistory)
+	{
+		this.medicalHistory = medicalHistory;
+	}
+	public bool SetSymptomCode(string symptomCode, out string sympErrorMessage)
+	{
+		sympErrorMessage = null;
+
+		if (symptomCode != "S1" && symptomCode != "S2" && symptomCode != "S3")
+		{
+			sympErrorMessage = "You must enter a valid symptom code";
+			return false;
+		}
+		this.symptomCode = symptomCode;
+		return true;
+	}
+	public void SetPrescription(string prescription)
+	{
+		this.prescription = prescription;
+	}
+
+	//get methods
+	public string GetName()
+	{
+		return name;
+	}
+	public int GetAge()
+	{
+		return age;
+	}
+	public string GetGender()
+	{
+		return gender;
+	}
+	public string GetMedicalHistory()
+	{
+		return medicalHistory;
+	}
+	public string GetSymptoms()
+	{
+		string symptoms = "";
+		switch (symptomCode)
+		{
+			case ("S1"): symptoms = "Headache"; break;
+			case ("S2"): symptoms = "Skin rashes"; break;
+			case ("S3"): symptoms = "Dizziness"; break;
+			default: symptoms = "Unknown"; break;
+		}
+		return symptoms;
+	}
 }

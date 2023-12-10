@@ -1,68 +1,49 @@
 ﻿using System;
-using System.Security.Cryptography;
 
 public class Program
 {
-    static void Main()
-    {
+	public static void Main()
+	{
+		Patient p1 = new Patient();
 
-        //Welcoming the new patient
-        Console.WriteLine($"Hello, I'm {MedicalBot.GetBotName()},\nI'm here to help you in your medication.");
-        Console.WriteLine("\nFirst, let's proceed with the clinical anamnesis.");
+		//getting needed infos
+		Console.WriteLine($"Welcome to {MedicalBot.GetBotName()}, your personal Medical Bot\n");
 
-        //Creating new patient 
-        Patient patient;
-        patient = new Patient();
+		Console.Write("Please enter the patient name: ");
+		while (!p1.SetName(Console.ReadLine(), out string nameErrorMessage))
+		{
+			Console.WriteLine(nameErrorMessage);
+			Console.Write("Please enter the patient name: ");
+		}
 
-        //Read and validate patient fields
-        Console.Write("\nPlease enter the patient name: ");
-        while (!patient.SetName(Console.ReadLine(), out string errorMessage))
-        {
-            Console.WriteLine(errorMessage);
-            Console.Write("Enter patient name: ");
-        }
+		Console.Write("Please enter the patient age: ");
+		while (!p1.SetAge(Console.ReadLine(), out string errorMessage))
+		{
+			Console.WriteLine(errorMessage);
+			Console.Write("Please enter the patient age: ");
+		}
 
-        Console.Write("Please enter patient age: ");
-        while (!patient.SetAge(int.Parse(Console.ReadLine()), out string errorMessage))
-        {
-            Console.WriteLine(errorMessage);
-            Console.Write("Please enter patient age: ");
-        }
+		Console.Write("Please enter the patient gender: ");
+		while (!p1.SetGender(Console.ReadLine(), out string genderErrorMessage))
+		{
+			Console.WriteLine(genderErrorMessage);
+			Console.Write("Please enter the patient gender: ");
+		}
 
-        Console.Write("Please enter your gender (e.g. Male/Female): ");
-        while (!patient.SetGender(Console.ReadLine(), out string errorMessage))
-            {
-            Console.WriteLine(errorMessage);
-            Console.Write("Please enter your gender: ");
-        }
-       
-        Console.Write("Please enter your medical history (e.g. Diabetes). Press enter for none: ");
-        patient.SetMedicalHistory(Console.ReadLine());
+		Console.Write("Please enter the patient medical history: ");
+		p1.SetMedicalHistory(Console.ReadLine());
 
+		MedicalBot.SymptomList();
+		Console.Write("\nPlease enter the patient symptom code: ");
+		while (!p1.SetSymptomCode(Console.ReadLine().ToUpper(), out string sympErrorMessage))
+		{
+			Console.WriteLine(sympErrorMessage);
+			Console.Write("\nPlease enter the patient symptom code: ");
+		}
 
-        //Next stage of diagnosis - symptons
-        Console.WriteLine($"\n\nWelcome, {patient.GetName()}, {patient.GetAge()}.");
-        Console.Write("Which of the following symptons do you have:\nS1. Headache\nS2. Skin rashes\nS3. " +
-            "Dizziness\n\nEnter the sympton " + "code from the above list (S1, S2 or S3): ");
-        
-        while (!patient.SetSymptonCode(Console.ReadLine(), out string errorMessage)){
-            Console.WriteLine(errorMessage);
-            Console.Write("Please choose again your sympton code: ");
-        }
+		MedicalBot.PrescribeMedication(p1);
 
-
-        //Next stage - calling MedicalBot + creating prescription
-        MedicalBot medicalbot = new MedicalBot();
-        medicalbot.PrescribeMedication(patient);
-
-        string prescription = patient.GetPrescription();
-
-        //Printing prescription
-        Console.WriteLine("\n\n");
-        Console.WriteLine(prescription);
-
-        //Goodbye message
-        Console.WriteLine("\n\nThanks for coming.");
-        Console.ReadKey();
-    }
+		Console.WriteLine("Thanks for using Medical Bob, bye!");
+		Console.ReadKey();
+	}
 }
